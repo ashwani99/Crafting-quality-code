@@ -25,6 +25,32 @@ class CashRegister:
         self.tens = tens
         self.twenties = twenties
 
+    def __str__(self):
+        """ (CashRegister) -> str
+        
+        String representation of the CashRegister.
+        
+        >>> reg1 = (1, 2, 3, 4, 5)
+        >>> reg1.__str__()
+        CashRegister: $160 ($1x1, $2x2, $5x3, $10x4, $20x5)
+        """
+
+        return "CashRegister: ${0} ($1x{1}, $2x{2}, $5x{3}, $10x{4}, $20x{5})".format(self.get_total(),
+                                                                                      self.loonies, self.toonies, self.fives, self.tens, self.twenties)
+
+    def __eq__(self, other):
+        """ (CashRegister, CashRegister) -> bool
+        
+        Returns True iff total value of money in both cash registers are the same.
+            
+        >>> reg1 = CashRegister(2, 0, 0, 0, 0)
+        >>> reg2 = CashRegister(0, 2, 0, 0, 0)
+        >>> reg1==reg2
+        True
+        """
+
+        return self.get_total() == other.get_total()
+
     def get_total(self):
         """
         CashRegister -> int
@@ -85,21 +111,20 @@ class CashRegister:
         elif denomination == 'toonies':
             self.toonies -= count
         elif denomination == 'fives':
-            self.toonies -= count
+            self.fives -= count
         elif denomination == 'tens':
-            self.toonies -= count
+            self.tens -= count
         elif denomination == 'twenties':
-            self.toonies -= count
+            self.twenties -= count
 
 
 if __name__ == '__main__':
-    # A cash register for 5 loonies, 5 toonies, 5 fives, 5 tens and 5 twenties,
-    # for a cash total of $190
+    cr1 = CashRegister(2, 0, 0, 0, 0)
+    cr2 = CashRegister(0, 1, 0, 0, 0)
+    cr3 = CashRegister(1, 1, 0, 0, 0)
+    print(cr1)
+    print(cr2)
+    print(cr3)
 
-    register = CashRegister(5, 5, 5, 5, 5)
-    print(register.get_total())
-
-    # register.add(3, 'toonies')
-    # register.remove(2, 'twenties')
-    #
-    # print(register.get_total())
+    print(cr1 == cr2)
+    print(cr3 == cr2)
